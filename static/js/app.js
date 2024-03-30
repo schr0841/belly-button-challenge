@@ -16,7 +16,7 @@ d3.json(url).then(function(data) {
     let samples = Object.values(data.samples);
     console.log(samples);
     
-    // add the options to the Test Subject ID No. button
+    // add the ID numbers (names) to the Test Subject ID No. button
     d3.select("#selDataset")
     .selectAll('myOptions')
      	.data(names)
@@ -49,15 +49,23 @@ d3.json(url).then(function(data) {
 
       //Filter metadata to get row of data corresponding to new_id
       let display_data = metadata.filter(item => item.id == new_id);
+      
+      //Empty out the #sample-metadata section of text
       d3.select('#sample-metadata').text('');
 
-      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
-      Object.entries(display_data[0]).forEach(([k,v]) => {
+      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries      
+      for (const [k, v] of Object.entries(display_data[0])){
         console.log('key,value: ' + k,v);
         //select the demographic info html section with d3 and append new pair of keys and values
         d3.select('#sample-metadata').append('h6').text(`${k} : ${v}`);
-    });
-      
+      };
+
+      // could also use .forEach() like follows
+      // Using array methods
+        /* Object.entries(obj).forEach(([key, value]) => {
+          console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+        }); */
+
       console.log('display_data 2: ' + display_data);        
 
       };
@@ -91,7 +99,7 @@ d3.json(url).then(function(data) {
 
     let layout = {title: "Top Ten OTUs"};
 
-    //Create bar chart for top ten OTUs
+    //Create bar chart for top ten OTUs. in html 'bar' tag
     Plotly.newPlot("bar", [trace1], layout);
 
     };
@@ -119,7 +127,7 @@ d3.json(url).then(function(data) {
       //Use otu_ids for the marker colors.
       //Use otu_labels for the text values.
 
-      //used https://plotly.com/javascript/bubble-charts/ as reference for setting up the trace
+      //used https://plotly.com/javascript/bubble-charts/ as reference for setting up the trace and markers
       let trace1={
         x: otu_ids.reverse(),
         y: sample_values.reverse(),
@@ -132,11 +140,12 @@ d3.json(url).then(function(data) {
       };
       
       let layout = {
+        title: "Number of bacteria vs OTU",
         xaxis: {title: 'OTU id'},
         yaxis: {title: 'Number of Bacteria'}
     };
 
-    //Create bubble chart for OTUs
+    //Create bubble chart for OTUs. in html 'bubble' tag
     Plotly.newPlot("bubble", [trace1], layout);
 
     }
