@@ -80,7 +80,7 @@ d3.json(url).then(function(data) {
       //samples json keys: "id", "otu_ids", "sample_values", "otu_labels"
       //first 10 items for horizontal bar chart. need to reverse the values like in example 14.3
       //Use sample_values as the values for the bar chart.
-      //Use otu_ids as the labels for the bar chart.
+      //Use otu_ids as the labels for the bar chart (insert text OTU into data elements).
       //Use otu_labels as the hovertext for the chart.
 
       let sample_values = display_data[0].sample_values.slice(0,10);
@@ -148,7 +148,7 @@ d3.json(url).then(function(data) {
     //Create bubble chart for OTUs. in html 'bubble' tag
     Plotly.newPlot("bubble", [trace1], layout);
 
-    }
+    };
     
     //Update all plots when new id is selected
     function updateAll(new_id){
